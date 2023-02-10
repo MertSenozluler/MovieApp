@@ -1,0 +1,58 @@
+﻿
+@{
+    ViewData["Title"] = "SearchResultInDetail";
+}
+
+@model List<MovieApp.Models.DTO.MovieCommentViewModel>
+@if (TempData["msg"] != null)
+{
+    <div class="mb-1 bg-black color text-white rounded text-center">@TempData["msg"]</div>
+}
+<div class="container-fluid">
+    <div class="row">
+
+        @*Adversitement*@
+        @if (!User.IsInRole("admin") && !User.IsInRole("superUser"))
+        {
+            <div class="col-sm-2 col-md-2 col-lg-2 mt-2 adv"><img src="~/img/adversitement1.jpeg" class="adv" style="width: 100%; height: 550px;"><img src="~/img/adversitement2.jpg" class="adv adv2" style="width: 100%; height: 550px;"> </div>
+        }
+
+
+        <div class="col-sm-8 col-md-8 col-lg-8 mt-2 mx-auto">
+            <div class="row">
+
+
+
+                @foreach (var movie in Model)
+                {
+                    <div class="col-sm-6 col-md-4 col-lg-3 mt-5">
+                        <div class="card mx-1">
+                            <div onclick="window.location.href='/Home/MovieDetail?MovieId=@movie.MovieId'" style="cursor:pointer"> <img src=~/Uploads/@movie.MovieImage class="card-img-top" style="width:100%; height:150px"></div>
+                            <div class="card-body">
+                                <h5 class="card-title" style="font-size:medium">@movie.MovieName</h5>
+                                <p class="card-text"> @(movie.MovieDescription.Length > 100 ? movie.MovieDescription.Substring(0, 25) + "..." : movie.MovieDescription)</p>
+                                <small>Year: @movie.PublishYear</small> <br>
+                                <small>Categories </small> <br>
+                                <small>@(movie.Categories.Length > 100 ? movie.Categories.Substring(0, 25) + "..." : movie.Categories)</small>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+
+
+
+            </div>
+        </div>
+
+        @*Adversitement*@
+        @if (!User.IsInRole("admin") && !User.IsInRole("superUser"))
+        {
+            <div class="col-sm-2 col-md-2 col-lg-2 mt-2 adv"><img src="~/img/adversitement2.jpg" class="adv" style="width: 100%; height: 550px;"><img src="~/img/adversitement1.jpeg" class="adv adv2" style="width: 100%; height: 550px;"> </div>
+        }
+
+    </div>
+</div>
+
+
+

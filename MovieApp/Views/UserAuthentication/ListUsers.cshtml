@@ -1,0 +1,103 @@
+﻿@using MovieApp.Models.DTO;
+@using System.Web;
+
+@{
+    ViewData["Title"] = "ListUsers";
+}
+
+@model List<ListUsersViewModel>
+
+
+<div class="container mt-5">
+    @if (TempData.ContainsKey("Message"))
+    {
+        <p class="mb-1 bg-danger color text-white text-center rounded">@TempData["Message"]</p>
+    }
+    <div class="row">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8">
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Profil Picture</th>
+                        <th>Name</th>
+                        <th>UserName</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Is Active?</th>
+                        <th>Balance</th>
+                        <th>Movies</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var user in Model)
+                    {
+                        <tr>
+                            <td><img style="width:50px; height:50px; border-radius:200px" src="/Uploads/@user.ProfilePicture" /></td>
+                            <td>@user.Name</td>
+                            <td>@user.UserName</td>
+                            <td>@user.Email</td>
+                            <td>@string.Join(" . ", user.Roles.ToList())</td>
+                            <td>@user.IsActive</td>
+                            <td>@user.Balance</td>
+                            <td>@user.Movies</td>
+                            <td>
+                                <form asp-controller="UserAuthentication" asp-action="IsActive" method="post">
+                                    <input type="hidden" name="UserName" value="@user.UserName">
+                                    <input onclick="return window.confirm('Are you sure?')" type="submit" value="Change Active" class="btn btn-danger btn-sm">
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+        <div class="col-sm-2"></div>
+    </div>
+</div>
+
+
+
+@*Pagination*@
+<div class="container">
+    <div class="row">
+        <div class="col-10"></div>
+        <div class="col-2">
+            <nav aria-label="Page navigation example" class="mt-5">
+                <ul class="pagination">
+                    
+                    @{
+                        var totalPages = 0;
+                        var currentPage = 0;
+                        var term = "";
+
+                        if (Model.Any())
+                        {
+                            totalPages = Model.First().TotalPages;
+                            currentPage = Model.First().CurrentPage;
+                            term = Model.First().Term;
+                        }
+                    }
+
+                    @for (int i = 1; i <= totalPages; i++)
+                    {
+                        if (i == currentPage)
+                        {
+                            <li class="page-item"><a class="page-link active" href="/UserAuthentication/ListUsers?currentPage=@i&term=@term">@i</a></li>
+                        }
+                        else
+                        {
+                            <li class="page-item"><a class="page-link" href="/UserAuthentication/ListUsers?currentPage=@i&term=@term">@i</a></li>
+                        }
+                    }   
+                    
+                    
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+

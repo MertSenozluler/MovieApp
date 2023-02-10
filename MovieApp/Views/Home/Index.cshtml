@@ -1,0 +1,153 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@model List<MovieApp.Models.DTO.HomeViewModel>
+
+    @if (TempData["msg"] != null)
+            {
+                    <div class="mb-1 bg-info color text-black rounded text-center">@TempData["msg"]</div>
+            }
+
+
+<div class="container-fluid">
+    <div class="row">
+
+
+        @*Adversitement*@
+        @if (!User.IsInRole("admin") && !User.IsInRole("superUser"))
+        {
+            <div class="col-sm-2 col-md-2 col-lg-2 mt-2 adv"><img src="~/img/adversitement1.jpeg" class="adv" style="width: 100%; height: 550px;"><img src="~/img/adversitement2.jpg" class="adv adv2" style="width: 100%; height: 550px;"> </div>
+
+        }
+
+        
+
+        
+        <div class="col-sm-8 col-md-8 col-lg-8 mt-2 mx-auto">
+            <div class="row">
+                <h3 class="text-center">Most Populer</h3>
+
+                @{
+                    var random = new Random();
+                    var randomMovies = Model.OrderBy(x => random.Next()).Take(8);
+                }
+
+
+                @foreach(var movie in randomMovies )
+                {
+                <div class="col-sm-6 col-md-4 col-lg-3 mt-2">
+                    <div class="card mx-1">
+                            <div onclick="window.location.href='/Home/MovieDetail?MovieId=@movie.Id'" style="cursor:pointer"> <img src=~/Uploads/@movie.MovieImage class="card-img-top" style="width:100%; height:150px"> </div>
+                        <div class="card-body">                           
+                                    <h5 class="card-title" style="font-size:medium">@movie.MovieName</h5>  
+                                <p class="card-text"> @(movie.MovieDescription.Length > 100 ? movie.MovieDescription.Substring(0, 25) + "..." : movie.MovieDescription)</p>
+                            <small>Year: @movie.PublishYear</small> <br>
+                            <small>Categories </small> <br>
+                                <small>@(movie.Category.Length > 100 ? movie.Category.Substring(0, 25) + "..." : movie.Category)</small>
+                        </div>
+                    </div>
+                </div>
+                }
+                
+                               
+                <h3 class="text-center mt-4">Dram</h3>
+                @{
+                    var randomMoviesbyCategory = Model.Where(m => m.Category.Contains("Dram")).OrderBy(x => random.Next()).Take(8);
+                }
+                @foreach (var movie in randomMoviesbyCategory)
+                {
+                    <div class="col-sm-6 col-md-4 col-lg-3 mt-2">
+                    <div class="card mx-1">
+                            <div onclick="window.location.href='/Home/MovieDetail?MovieId=@movie.Id'" style="cursor:pointer">
+                                <img src=~/Uploads/@movie.MovieImage class="card-img-top" style="width:100%; height:150px"></div>
+                        <div class="card-body">                           
+                                    <h5 class="card-title" style="font-size:medium">@movie.MovieName</h5>  
+                                <p class="card-text"> @(movie.MovieDescription.Length > 100 ? movie.MovieDescription.Substring(0, 25) + "..." : movie.MovieDescription)</p>
+                            <small>Year: @movie.PublishYear</small> <br>
+                            <small>Categories </small> <br>
+                                <small>@(movie.Category.Length > 100 ? movie.Category.Substring(0, 25) + "..." : movie.Category)</small>
+                        </div>
+                    </div>
+                    </div>
+                }
+
+
+                <h3 class="text-center mt-4">Action</h3>
+                @{
+                    var randomMoviesbyCategory2 = Model.Where(m => m.Category.Contains("Action")).OrderBy(x => random.Next()).Take(4);
+                }
+                @foreach (var movie in randomMoviesbyCategory2)
+                {
+                    <div class="col-sm-6 col-md-4 col-lg-3 mt-2">
+                        <div class="card mx-1">
+                            <div onclick="window.location.href='/Home/MovieDetail?MovieId=@movie.Id'" style="cursor:pointer">
+                                <img src=~/Uploads/@movie.MovieImage class="card-img-top" style="width:100%; height:150px"></div>
+                            <div class="card-body">
+                                <h5 class="card-title" style="font-size:medium">@movie.MovieName</h5>
+                                <p class="card-text"> @(movie.MovieDescription.Length > 100 ? movie.MovieDescription.Substring(0, 25) + "..." : movie.MovieDescription)</p>
+                                <small>Year: @movie.PublishYear</small> <br>
+                                <small>Categories </small> <br>
+                                <small>@(movie.Category.Length > 100 ? movie.Category.Substring(0, 25) + "..." : movie.Category)</small>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+
+                <h3 class="text-center mt-4">Horror</h3>
+                @{
+                    var randomMoviesbyCategory3 = Model.Where(m => m.Category.Contains("Horror")).OrderBy(x => random.Next()).Take(4);
+                }
+                @foreach (var movie in randomMoviesbyCategory3)
+                {
+                    <div class="col-sm-6 col-md-4 col-lg-3 mt-2">
+                        <div class="card mx-1">
+                            <div onclick="window.location.href='/Home/MovieDetail?MovieId=@movie.Id'" style="cursor:pointer">
+                                <img src=~/Uploads/@movie.MovieImage class="card-img-top" style="width:100%; height:150px"></div>
+                            <div class="card-body">
+                                <h5 class="card-title" style="font-size:medium">@movie.MovieName</h5>
+                                <p class="card-text"> @(movie.MovieDescription.Length > 100 ? movie.MovieDescription.Substring(0, 25) + "..." : movie.MovieDescription)</p>
+                                <small>Year: @movie.PublishYear</small> <br>
+                                <small>Categories </small> <br>
+                                <small>@(movie.Category.Length > 100 ? movie.Category.Substring(0, 25) + "..." : movie.Category)</small>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+
+                <h3 class="text-center mt-4">Comedy</h3>
+                @{
+                    var randomMoviesbyCategory4 = Model.Where(m => m.Category.Contains("Comedy")).OrderBy(x => random.Next()).Take(4);
+                }
+                @foreach (var movie in randomMoviesbyCategory4)
+                {
+                    <div class="col-sm-6 col-md-4 col-lg-3 mt-2">
+                        <div class="card mx-1">
+                            <div onclick="window.location.href='/Home/MovieDetail?MovieId=@movie.Id'" style="cursor:pointer"> <img src=~/Uploads/@movie.MovieImage class="card-img-top" style="width:100%; height:150px"></div>
+                            <div class="card-body">
+                                <h5 class="card-title" style="font-size:medium">@movie.MovieName</h5>
+                                <p class="card-text"> @(movie.MovieDescription.Length > 100 ? movie.MovieDescription.Substring(0, 25) + "..." : movie.MovieDescription)</p>
+                                <small>Year: @movie.PublishYear</small> <br>
+                                <small>Categories </small> <br>
+                                <small>@(movie.Category.Length > 100 ? movie.Category.Substring(0, 25) + "..." : movie.Category)</small>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                             
+            </div>
+        </div>
+
+        @*Adversitement*@
+        @if (!User.IsInRole("admin") && !User.IsInRole("superUser"))
+        {
+            <div class="col-sm-2 col-md-2 col-lg-2 mt-2 adv"><img src="~/img/adversitement2.jpg" class="adv" style="width: 100%; height: 550px;"><img src="~/img/adversitement1.jpeg" class="adv adv2" style="width: 100%; height: 550px;"> </div>
+        }
+        
+     
+    </div>
+</div>
+
+

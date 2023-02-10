@@ -1,0 +1,85 @@
+﻿
+@{
+    ViewData["Title"] = "WatchMovie";
+}
+
+@model MovieApp.Models.Domain.UserBalanceMovie
+
+<div class="container-fluid">
+    <div class="row">
+
+        @*Adversitement*@
+        @if (!User.IsInRole("admin") && !User.IsInRole("superUser"))
+        {
+            <div class="col-sm-2 col-md-2 col-lg-2 mt-2 adv"><img src="~/img/adversitement1.jpeg" class="adv" style="width: 100%; height: 550px;"><img src="~/img/adversitement2.jpg" class="adv adv2" style="width: 100%; height: 550px;"> </div>
+
+        }
+
+
+        <div class="col-sm-8 col-md-8 col-lg-8 mt-2 mx-auto">
+            <div class="row">
+
+                @if (User.IsInRole("admin") || ViewData["Role"].ToString() == "superUser")
+                {
+                    <iframe width="450" height="450" src="https://www.youtube.com/embed/pgLjYsVP4H0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                }
+                else
+              
+                {
+                        <img src="~/img/adversitement2.jpg" class="advBeforeMovie m-auto" style="width: 400px; height: 400px;">
+                        <button id="btnContinue">Wait Please</button>
+                 
+                    <iframe id="videoFrame" width="450" height="450" src="https://www.youtube.com/embed/pgLjYsVP4H0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                }
+
+            </div>
+        </div>
+
+        @*Adversitement*@
+        @if (!User.IsInRole("admin") && !User.IsInRole("superUser"))
+        {
+            <div class="col-sm-2 col-md-2 col-lg-2 mt-2 adv"><img src="~/img/adversitement2.jpg" class="adv" style="width: 100%; height: 550px;"><img src="~/img/adversitement1.jpeg" class="adv adv2" style="width: 100%; height: 550px;"> </div>
+        }
+
+    </div>
+</div>
+
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $.fn.timedDisable = function (time) {
+                if (time == null) {
+                    time = 10000;
+                }
+                var seconds = Math.ceil(time / 1000);  // Calculate the number of seconds
+                return $(this).each(function () {
+                    $(this).attr('disabled', 'disabled');
+                    var disabledElem = $(this);
+                    var originalText = this.innerHTML;  // Remember the original text content
+
+                    // do a set interval, using an interval of 1000 milliseconds
+                    //     and clear it after the number of seconds counts down to 0
+                    var interval = setInterval(function () {
+                        // decrement the seconds and update the text
+                        disabledElem.text(originalText + ' (' + seconds + ')');
+                        if (seconds === 0) {  // once seconds is 0...
+                            disabledElem.removeAttr('disabled')
+                                .text(originalText);   //reset to original text
+                            clearInterval(interval);  // clear interval
+                            $("#videoFrame").show();
+                            $(".advBeforeMovie").hide();
+                            $("#btnContinue").hide();
+                        }
+                        seconds--;  // decrement the seconds
+                    }, 1000);
+                });
+            };
+
+            $(".advBeforeMovie").show();
+            $("#videoFrame").hide();
+            $('#btnContinue').timedDisable();
+        });
+    </script>
+
+}

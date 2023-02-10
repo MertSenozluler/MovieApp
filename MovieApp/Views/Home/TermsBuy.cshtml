@@ -1,0 +1,168 @@
+﻿
+@{
+    ViewData["Title"] = "TermsBuy";
+}
+
+@if (TempData["msg"] != null)
+{
+    <div class="mb-1 bg-info color text-black rounded text-center">@TempData["msg"]</div>
+}
+
+
+<div class="container-fluid">
+    <div class="row">
+
+        @*Adversitement*@
+        @if (!User.IsInRole("admin") && !User.IsInRole("superUser"))
+        {
+            <div class="col-sm-2 col-md-2 col-lg-2 mt-2 adv"><img src="~/img/adversitement1.jpeg" class="adv" style="width: 100%; height: 550px;"><img src="~/img/adversitement2.jpg" class="adv adv2" style="width: 100%; height: 550px;"> </div>
+
+        }
+
+
+        <div class="col-sm-8 col-md-8 col-lg-8 mt-2 mx-auto">
+            <div class="row terms">               
+                <ul class="list-group text-center">
+                    <li class="list-group-item">
+                        You can buy movies for $2.0 and watch them as much as you want without adding any money to the balance.</li>
+                    <li class="list-group-item">
+                        You can do the same for 1.5$ from your balance. However, you can load at least $10 into your balance.
+                    </li>
+                    <li class="list-group-item">                  
+If you say you are a movie lover, we recommend you a monthly package. You can watch unlimited monthly for $30, unlimited monthly ad-free for $50!
+                    </li>
+                    <li class="list-group-item">
+                        Ads appear on the site interface and 10 seconds before the movies start.
+                    </li>
+                    <li class="list-group-item">
+                        Your package will be automatically renewed if you have money in your balance. you can go to your user page to cancel
+                    </li>
+                    <li class="list-group-item">
+                        If you already have a premium or super membership, first cancel your package from your user page to change packages.
+                    </li>
+            
+                </ul>
+               
+                <br />
+
+           
+                
+                <!-- Button trigger modal for Buy Balance -->
+                <button type="button" class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#balanceModal">
+                    Buy Balance
+                </button>
+                <!-- Modal for Buy Balance -->
+                <div class="modal fade" id="balanceModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="balanceModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="balanceModalLabel">BUY BALANCE</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form asp-controller="Buy" asp-action="BuyBalance" method="post" onsubmit="return validateForm()">
+                                    <label for="balance">Select balance:</label>
+                                    <select id="balance" name="balance" class="form-select" aria-label="Default select example">
+                                        <option selected>Select</option>
+                                        <option value="10">10$</option>
+                                        <option value="20">20$</option>
+                                        <option value="30">30$</option>
+                                        <option value="40">40$</option>
+                                        <option value="50">50$</option>
+                                        <option value="60">60$</option>
+                                        <option value="70">70$</option>
+                                        <option value="80">80$</option>
+                                        <option value="90">90$</option>
+                                        <option value="100">100$</option>
+                                        <option value="150">150$</option>
+                                        <option value="200">200$</option>
+                                    </select>
+                                    <button type="submit" class="btn btn-primary mt-2">Buy</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+           
+
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary mt-2 buy" data-bs-toggle="modal" data-bs-target="#premiumModal">
+                    Buy Premium
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="premiumModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="premiumModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="premiumModalLabel">BUY</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                Buy Premium for 30$ per month!
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <form action="/Buy/BuyPremium" method="post">
+                                <button type="submit" class="btn btn-primary" onclick="window.location.href='/Buy/BuyPremium'">Buy Premium</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary mt-2 buy" data-bs-toggle="modal" data-bs-target="#superModal">
+                    Buy Super
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="superModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="superModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="superModalLabel">BUY</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                Buy Super for 50$ per month!
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <form action="/Buy/BuySuper" method="post">
+                                    <button type="submit" class="btn btn-primary" onclick="window.location.href='/Buy/BuySuper'">Buy Super</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              
+
+
+            </div>
+        </div>
+
+        @*Adversitement*@
+        @if (!User.IsInRole("admin") && !User.IsInRole("superUser"))
+        {
+            <div class="col-sm-2 col-md-2 col-lg-2 mt-2 adv"><img src="~/img/adversitement2.jpg" class="adv" style="width: 100%; height: 550px;"><img src="~/img/adversitement1.jpeg" class="adv adv2" style="width: 100%; height: 550px;"> </div>
+        }
+
+    </div>
+</div>
+
+
+@section scripts {
+
+    <script>
+        function validateForm() {
+            var x = document.getElementById("balance").value;
+            if (x === "Select") {
+                alert("Please select a balance");
+                return false;
+            }
+        }
+    </script>
+
+}

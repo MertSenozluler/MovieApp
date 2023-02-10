@@ -1,0 +1,100 @@
+﻿@{
+    ViewData["Title"] = "MovieList";
+}
+
+<h1 class="text-center">MovieList</h1>
+
+@model MovieApp.Models.DTO.MovieListViewModel
+
+
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-sm-12">
+            <div>
+
+
+                @if (TempData["msg"] != null)
+                {
+                    <div class="mb-1 bg-danger color text-white text-center rounded">@TempData["msg"]</div>
+                }
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">Movie Name</th>
+                            <th scope="col">Movie Description</th>
+                            <th scope="col">Actors</th>
+                            <th scope="col">Publish Year</th>
+                            <th scope="col">Image</th>
+                            <th scope="col">Categories</th>
+                            <th scope="col">Subcategories</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in Model.MovieList)
+                        {
+
+                            <tr>
+                                <td>@item.Id</td>
+                                <td>
+                                    <div onclick="window.location.href='/Home/MovieDetail?MovieId=@item.Id'" style="cursor:pointer">
+                                        @item.MovieName
+                                    </div>
+                                </td>
+                                <td>@Html.Raw(item.MovieDescription.Length > 25 ? item.MovieDescription.Substring(0, 25) + "..." : item.MovieDescription)</td>
+                                <td>@item.Actors</td>
+                                <td>@item.PublishYear</td>
+                                <td>
+                                    <div onclick="window.location.href='/Home/MovieDetail?movieId=@item.Id'" style="cursor:pointer">
+                                        <img style="height:60px;width:80px" src="/Uploads/@item.MovieImage" />
+                                    </div>
+                                </td>
+                                <td>@item.CategoryNames</td>
+                                <td>@item.SubCategoryNames</td>
+
+
+                                <td>
+                                    <a href="/Movie/Edit/?id=@item.Id" class="btn btn-default"><i class="fa fa-edit"></i></a>
+                                    <a onclick="return window.confirm('Are you sure?')" href="/Movie/Delete/?id=@item.Id" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                                </td>
+                            </tr>
+
+                        }
+                    </tbody>
+                </table>
+
+                <div class="input-container">
+                    <a href="/Movie/Add" class="btn btn-secondary">Add</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-10"></div>
+        <div class="col-2">
+            <nav aria-label="Page navigation example" class="mt-5">
+                <ul class="pagination">
+                    @for (int i = 1; i <= Model.TotalPages; i++)
+                    {
+                        if (i == Model.CurrentPage)
+                        {
+                            <li class="page-item"><a class="page-link active" href="/Movie/Movielist?currentPage=@i&term=@Model.Term">@i</a></li>
+                        }
+                        else
+                        {
+                            <li class="page-item" ><a class="page-link" href="/Movie/Movielist?currentPage=@i&term=@Model.Term">@i</a></li>
+                        }
+                    }
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>

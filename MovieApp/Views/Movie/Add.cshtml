@@ -1,0 +1,79 @@
+﻿
+@{
+    ViewData["Title"] = "Add";
+}
+
+@model MovieApp.Models.Domain.Movie
+
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8">
+            @if (TempData["msg"] != null)
+            {
+                    <div class="mb-1 bg-danger color text-white rounded">@TempData["msg"]</div>
+            }
+            <h2>Add Movie</h2>
+            <form asp-action="Add" method="post" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label asp-for="MovieName" class="form-label">Movie Name</label>
+                    <input type="text" asp-for="MovieName" class="form-control">
+                </div>
+                <div class="message-box pd-x-28 error mb-3">
+                    <span asp-validation-for="MovieName" style="color:red"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="MovieDescription" class="form-label">Movie Description</label>
+                    <textarea asp-for="MovieDescription" class="form-control"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Actors" class="form-label">Actors</label>
+                    <textarea asp-for="Actors" class="form-control"></textarea>
+                </div>
+                <div class="message-box pd-x-28 error">
+                    <span asp-validation-for="Actors" style="color:red"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="PublishYear" class="form-label">Publish Year</label>
+                    <textarea asp-for="PublishYear" class="form-control"></textarea>
+                </div>
+                <div class="message-box pd-x-28 error">
+                    <span asp-validation-for="PublishYear" style="color:red"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="ImageFile" class="form-label">Image</label>
+                    <input type="file" asp-for="ImageFile" class="form-control">
+                </div>
+                <div class="message-box pd-x-28 error">
+                    <span asp-validation-for="ImageFile" style="color:red"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Categories" class="form-label">Categories</label>
+                    <select asp-items="Model.CategoryList" asp-for="Categories" class="form-select" multiple size="5" style="width:100%">
+                        <option value="">--Select--</option>
+                    </select>
+                </div>
+                <div class="message-box pd-x-28 error">
+                    <span asp-validation-for="Categories" style="color:red"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="SubCategories" class="form-label">Subcategories</label>
+                    <select asp-items="Model.SubCategoryList" asp-for="SubCategories" class="form-select" multiple size="5" style="width:100%">
+                        <option value="">--Select--</option>
+                    </select>
+                </div>
+                <div class="message-box pd-x-28 error">
+                    <span asp-validation-for="SubCategories" style="color:red"></span>
+                </div>
+
+
+                <button type="submit" class="btn btn-primary mt-4">Submit</button>
+                <a class="btn btn-secondary mt-4" href="/Movie/MovieList">All records</a>
+            </form>
+
+
+        </div>
+        <div class="col-sm-2"></div>
+    </div>
+</div>

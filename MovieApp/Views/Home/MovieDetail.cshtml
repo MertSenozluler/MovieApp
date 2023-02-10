@@ -1,0 +1,293 @@
+﻿@using System.Security.Claims;
+
+@{
+    ViewData["Title"] = "MovieDetail";
+}
+
+@model MovieApp.Models.DTO.MovieCommentViewModel
+
+@if (TempData["msg"] != null)
+{
+    <div class="mb-1 bg-info color text-black rounded text-center">@TempData["msg"]</div>
+}
+
+
+
+<div class="container-fluid">
+    <div class="row">
+
+        @*Adversitement*@
+        @if (!User.IsInRole("admin") && !User.IsInRole("superUser"))
+        {
+            <div class="col-sm-2 col-md-2 col-lg-2 mt-2 adv"><img src="~/img/adversitement1.jpeg" class="adv" style="width: 100%; height: 550px;"><img src="~/img/adversitement2.jpg" class="adv adv2" style="width: 100%; height: 550px;"> </div>
+
+        }
+
+        <div class="col-sm-8 col-md-8 col-lg-8 mt-2 mx-auto">
+            <div class="row">             
+                <div class="col-lg-10 col-sm-12">
+                    <div class="row">
+                        <div class="col-lg-4 col-sm-6 mt-4"><img src=~/Uploads/@Model.MovieImage class="img-fluid detailImage"></div>
+                        <div class="col-lg-8 col-sm-6 mt-4">
+                            <h3>@Model.MovieName</h3>
+                            <p>@Model.MovieDescription</p>
+                            <small>Actors: @Model.Actors</small> <br />
+                            <small>Year: @Model.PublishYear</small> <br />
+                            <small>Category: @Model.Categories</small>
+                        </div>
+                    </div>
+
+                
+                 
+                    @if (User.IsInRole("admin") || Model.Role == "superUser" || Model.Role == "premiumUser" || (
+                    !string.IsNullOrEmpty(Model.BuyMovie) && Model.BuyMovie.Split(',').Select(x => int.TryParse(x, out int movieId) ? movieId : 0).Contains(Model.MovieId)))
+                    {
+                        <form method="get" asp-controller="Buy" asp-action="WatchMovie">
+                            <input type="hidden" name="MovieName" value="@Model.MovieName" />
+                            <input type="hidden" name="MovieId" value="@Model.MovieId" /> 
+                            <br>
+                            <button type="submit" class="btn btn-lg btn-primary">Watch Now!</button>
+                        </form>
+
+                    }
+                    else
+                    {
+                        @*Buttons*@
+                        <div class="row text-center buyButtons">
+                            <div class="col-12">
+
+                                @*Buy direct button*@
+
+                                <button type="button" class="btn btn-primary mt-2" style="min-width:200px" data-bs-toggle="modal" data-bs-target="#directModal">
+                                    Buy direct <span style="color: #F4D9E7">(2.0$)</span>
+                                </button>
+                           
+                                <!-- Modal -->
+                                <div class="modal fade" id="directModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="directModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5 w-100 text-center" id="directModalLabel">BUY</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Buy @Model.MovieName direct
+                                            </div>
+                                            <div class="modal-footer w-100 text-center">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                <form action="/Buy/BuyMovieDirect" method="post">
+                                                    <input type="hidden" name="MovieId" value="@Model.MovieId" />
+                                                    <button type="submit" class="btn btn-primary" style="min-width:200px" onclick="window.location.href='/Buy/BuyMovieDirect'">Buy direct <span style="color: #F4D9E7">(2.0$)</span></button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="col-12">
+
+                                @*Buy from balance button*@
+
+                                <button type="button" class="btn btn-primary mt-2" style="min-width:200px" data-bs-toggle="modal" data-bs-target="#balanceModal">
+                                    Buy from balance <span style="color: #F4D9E7">(1.5$)</span>
+                                </button>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="balanceModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="balanceModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5 w-100 text-center" id="balanceModalLabel">BUY</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Buy @Model.MovieName from balance
+                                            </div>
+                                            <div class="modal-footer w-100 text-center">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                <form action="/Buy/BuyMovieBalance" method="post">
+                                                    <input type="hidden" name="MovieId" value="@Model.MovieId" />
+                                                    <button type="submit" class="btn btn-primary" style="min-width:200px" onclick="window.location.href='/Buy/BuyMovieBalance'">Buy from balance <span style="color: #F4D9E7">(1.5$)</span></button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                   
+                    }
+          
+
+
+                    <div class="row mt-3">
+                        <div class="container mt-5">
+                            <div class="d-flex justify-content-center row">
+                                <div class="col-md-8">
+                                    <div class="d-flex flex-column comment-section">
+                                        <div class="bg-white p-2">
+
+                                            @if (User.Identity.IsAuthenticated)
+                                            {
+                                    <form asp-controller="Comment" asp-action="Add" method="post">
+                                            <input type="hidden" name="MovieId" value="@Model.MovieId" />
+                                            <input type="hidden" name="userId" value="@User.FindFirstValue(ClaimTypes.NameIdentifier)" class="form-control" />
+                                         <div class="bg-light p-2">
+                                            <div class="d-flex flex-row align-items-start">
+                                                <img class="rounded-circle" src=~/Uploads/@Model.LoggedInUserProfilePicture  width="50">
+                                                <textarea class="form-control ml-1 shadow-none textarea" name="Body"></textarea>
+                                            </div>
+                                            <div class="mt-2 text-right"><button class="btn btn-primary btn-sm shadow-none" type="submit">Post comment</button>
+                                            </div>
+                                        </div>
+                                                </form>
+                                            }
+
+                                            
+
+
+                                            @if (Model.CommentList != null && Model.CommentList.Count() != 0)
+                                            {
+                                                @if(Model.CommentList!= null && !User.Identity.IsAuthenticated)
+                                                {
+                                                    <p style="color: coral;text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black; font-size:x-large; font-weight:400" class="text-center">
+                                                        Comments
+                                                    </p>
+                                                }
+                                                @foreach (var comment in Model.CommentList.OrderByDescending(x => x.CommentDate))
+                                                {
+                                                    <div class="comments">
+                                                        <div class="d-flex flex-row user-info justify-content-between" style="max-height:90px">
+                                                            <img class="rounded-circle" src="~/Uploads/@comment.UserProfilePicture" width="40">
+                                                            <div class="d-flex flex-column justify-content-start ml-2">
+                                                                <span class="d-block font-weight-bold name">@comment.UserName</span>
+                                                                <span class="date text-black-50">Shared publicly - @comment.CommentDate</span>
+
+                                                      @*Only the admin and the commenting user can see the delete button and delete it.*@
+                                                                @if (Model.UserId == comment.UserId || User.IsInRole("admin"))
+                                                                {
+                                                                    <form asp-controller="Comment" asp-action="Delete" method="post">
+                                                                        <input type="hidden" name="CommentUserId" value="@comment.UserId" />
+                                                                        <input type="hidden" name="CommentId" value="@comment.Id" />
+                                                                        <input type="hidden" name="MovieId" value="@comment.MovieId" />
+                                                                        <input type="submit" value="Delete" class="btn btn-danger btn-sm" />
+                                                                    </form>
+                                                                }
+                                                            </div>
+                                                        </div>
+
+                                                        @*If the body is long, it should not overflow*@
+                                                        <div class="mt-2" style="max-width:500px; overflow-wrap:break-word; word-wrap:break-word;">
+                                                            <p class="comment-text">
+                                                            @if (comment.Body.Length > 100)
+                                                            {
+                                                            <span class="comment-preview">@comment.Body.Substring(0, 100) ...</span>
+                                                            <span class="comment-full d-none">@comment.Body</span> <br />
+                                                            <a href="#view-more" class="view-more">View More</a>
+                                                            }
+                                                            else
+                                                            {
+                                                            @comment.Body
+                                                            }
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                        <hr />
+                                                }
+                                                
+                                            }
+                                            
+                                            else
+                                            {
+                                                @if (User.Identity.IsAuthenticated)
+                                                {
+                                                    <p style="color: coral;text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black; font-size:x-large; font-weight:400" class="text-center">
+                                                        Be the first to comment!</p>
+                                                }
+                                                else
+                                                {
+                                                    <p style="color: coral;text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black; font-size:x-large; font-weight:400" class="text-center">
+                                                        No Comment. Please login to leave a comment!
+                                                    </p>
+                                                
+                                                }
+                                            }
+                                          
+                                        </div>
+                                                                             
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+   
+                <div class="col-lg-2 col-sm-12 youMayLike">
+                   <div class="row">
+                    <h4 class="text-center mt-3">You may also like</h4>
+                     @{
+                    var random = new Random();
+                    var movies = Model.MovieList.Where(x => x.MovieName != Model.MovieName).ToList();
+                    var randomMovies = movies.OrderBy(x => random.Next()).Take(6);
+                      }
+                        @foreach (var movie in randomMovies)
+                    {   
+                        <div class="col-lg-12 col-sm-4 col-6">
+                            
+                            <div class="card mx-1 mt-2" style="height:100%">
+                                    <div onclick="window.location.href='/Home/MovieDetail?MovieId=@movie.Id'" style="cursor:pointer">
+                                    <img src=~/Uploads/@movie.MovieImage class="card-img-top" style="max-height:125px">
+                                </div>
+                                <div class="card-body mt-2">
+                                    <h5 class="card-title" style="font-size:medium">@movie.MovieName</h5>
+                                    <small>Year: @movie.PublishYear</small> <br>
+                                    <small class="card-text">Actors: @(movie.Actors.Length > 18 ? movie.Actors.Substring(0, 18) + "..." : movie.MovieDescription)</small>
+                                </div>
+                            </div> 
+                        </div>     
+                               
+                    }
+                    </div>
+                </div>
+            </div>            
+        </div>
+
+        @*Adversitement*@
+        @if (!User.IsInRole("admin") && !User.IsInRole("superUser"))
+        {
+            <div class="col-sm-2 col-md-2 col-lg-2 mt-2 adv"><img src="~/img/adversitement2.jpg" class="adv" style="width: 100%; height: 550px;"><img src="~/img/adversitement1.jpeg" class="adv adv2" style="width: 100%; height: 550px;"> </div>
+        }
+
+    </div>
+</div>
+
+
+
+@section Scripts
+{
+    <script>
+        // View More Section
+        $(document).on("click", ".view-more", function () {
+            $(this).siblings(".comment-preview").addClass("d-none");
+            $(this).siblings(".comment-full").removeClass("d-none");
+            $(this).remove();
+        });
+
+        // When click the a link, page should not move
+        $('a.view-more').click(function (event) {
+            event.preventDefault();
+            var currentScroll = $(window).scrollTop();
+            // more functionality here
+            $(window).scrollTop(currentScroll);
+        });
+    </script>
+}
+
+
+
+
+
+        

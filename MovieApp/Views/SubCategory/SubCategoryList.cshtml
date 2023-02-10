@@ -1,0 +1,43 @@
+﻿
+@{
+    ViewData["Title"] = "SubCategoryList";
+}
+
+@model IEnumerable<MovieApp.Models.Domain.SubCategory>
+
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-sm-4"></div>
+        <div class="col-sm-4">
+            <h2>Subcategory List</h2>
+
+            @if (TempData["msg"] != null)
+            {
+                <div class="mb-1 bg-danger color text-white rounded">@TempData["msg"]</div>
+            }
+
+            <table>
+                <tr>
+                    <th>Name</th>
+                    <th></th>
+                </tr>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.SubCategoryName</td>
+                        <td>
+                            <a href="/SubCategory/Edit/?id=@item.Id" class="btn btn-default"><i class="fa fa-edit"></i></a>
+                            <a onclick="return window.confirm('Are you sure?')" href="/SubCategory/Delete/?id=@item.Id" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                        </td>
+                    </tr>
+                }
+            </table>
+            <div class="input-container">
+                <a href="/SubCategory/Add" class="btn btn-primary">Add</a>
+            </div>
+        </div>
+        <div class="col-sm-4"></div>
+    </div>
+</div>
+

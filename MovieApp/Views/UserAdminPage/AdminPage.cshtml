@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewData["Title"] = "AdminPage";
+}
+
+@model MovieApp.Models.DTO.AdminPageViewModel
+
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-2 col-md-2 col-lg-2 mt-4">
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-info"><a href="/Movie/MovieList" style="color:black !important; font-size:larger; font-weight:600">Movie</a></li>
+                <li class="list-group-item list-group-item-warning"><a href="/UserAuthentication/ListUsers" style="color:black !important; font-size:larger; font-weight:600">Users</a></li>
+                <li class="list-group-item list-group-item-success"><a href="/Category/CategoryList" style="color:black !important; font-size:larger; font-weight:600">Category</a></li>
+                <li class="list-group-item list-group-item-primary"><a href="/SubCategory/SubCategoryList" style="color:black !important; font-size:larger; font-weight:600">Subcategory</a></li>              
+            </ul>
+        </div>
+        <div class="col-sm-3 col-md-3 col-lg-3 mt-3 mt-4">
+            <ul class="list group animate__animated animate__bounce">
+                <li class="list-group-item" style="font-size:larger">Daily Balance : @Model.DailyBalance $</li>
+                <li class="list-group-item" style="font-size:larger">Weekly Balance : @Model.WeeklyBalance $</li>
+                <li class="list-group-item" style="font-size:larger">Total Balance : @Model.TotalBalance $</li>
+
+
+            </ul>
+        </div>
+        <div class="col-sm-3 col-md-3 col-lg-3 mt-2 mt-4">
+            <ul class="list group animate__animated animate__bounce">
+                <li class="list-group-item" style="font-size:larger">Total Member : @Model.TotalMember</li>
+                <li class="list-group-item" style="font-size:larger">Total Premium Member : @Model.TotalPremiumMember</li>
+                <li class="list-group-item" style="font-size:larger">Total Super Member : @Model.TotalSuperMember</li>
+            </ul>
+        </div>
+        <div class="col-sm-3 col-md-3 col-lg-3 mt-2 mt-4">
+            <ul class="list group animate__animated animate__bounce">
+                <li class="list-group-item" style="font-size:larger">Total Movie : @Model.TotalMovie</li>
+                <li class="list-group-item" style="font-size:larger">Total Watch : @Model.TotalWatch</li>
+                <li class="list-group-item" style="font-size:larger">Total Watch : @Model.TotalComment</li>
+
+            </ul>
+        </div>
+    </div>
+</div>
+

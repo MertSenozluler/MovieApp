@@ -1,0 +1,36 @@
+﻿
+@{
+    ViewData["Title"] = "Login";
+}
+@model MovieApp.Models.DTO.LoginModel
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-sm-4"></div>
+        <div class="col-sm-4">
+            @if (TempData["msg"] != null)
+            {
+                <div class="msg mb-3" style="color:red; font-weight:500">@TempData["msg"]</div>
+            }
+
+            <form asp-action="Login" method="post">
+                <h2>Login</h2>
+                <div class="mb-3 mt-3">
+                    <label asp-for="UserName" class="form-label">Username</label>
+                    <input type="text" asp-for="UserName" class="form-control" id="exampleInputEmail1">
+                    <span class="err mt-3" style="color:red" asp-validation-for="UserName"></span>
+                </div>
+
+                <div class="mb-3 mt-3">
+                    <label asp-for="Password" class="form-label">Password</label>
+                    <input type="password" asp-for="Password" class="form-control" id="exampleInputEmail1">
+                    <span class="err mt-3" style="color:red" asp-validation-for="UserName"></span>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+        <div class="col-sm-4"></div>
+    </div>
+</div>
+

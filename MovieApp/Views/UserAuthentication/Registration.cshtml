@@ -1,0 +1,59 @@
+﻿
+@{
+    ViewData["Title"] = "Registration";
+}
+@model MovieApp.Models.DTO.RegistrationModel
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-sm-4"></div>
+        <div class="col-sm-4">
+            @if (TempData["msg"] != null)
+            {
+                <div class="msg mb-3" style="color:red; font-weight:500">@TempData["msg"]</div>
+            }
+
+            <form asp-action="Registration" method="post" enctype="multipart/form-data">
+                <h2>Registration</h2>
+                <div class="mb-3">
+                    <label asp-for="ImageFile" class="form-label">Image</label>
+                    <input type="file" asp-for="ImageFile" class="form-control">
+                </div>
+                <div class="mb-3 mt-3">
+                    <label class="form-label">Name</label>
+                    <input type="text" asp-for="Name" class="form-control" id="exampleInputEmail1">
+                    <span class="err mt-3" style="color:red" asp-validation-for="Name"></span>
+                </div>
+
+                <div class="mb-3 mt-3">
+                    <label class="form-label">Email</label>
+                    <input type="text" asp-for="Email" class="form-control" id="exampleInputEmail1">
+                    <span class="err mt-3" style="color:red" asp-validation-for="Email"></span>
+                </div>
+
+                <div class="mb-3 mt-3">
+                    <label class="form-label">UserName</label>
+                    <input type="text" asp-for="UserName" class="form-control" id="exampleInputEmail1">
+                    <span class="err mt-3" style="color:red" asp-validation-for="UserName"></span>
+                </div>
+
+                <div class="mb-3 mt-3">
+                    <label class="form-label">Password</label>
+                    <input type="password" asp-for="Password" class="form-control" id="exampleInputEmail1">
+                    <span class="err mt-3" style="color:red" asp-validation-for="Password"></span>
+                </div>
+
+                <div class="mb-3 mt-3">
+                    <label class="form-label">Password confirm</label>
+                    <input type="password" asp-for="PasswordConfirmation" class="form-control" id="exampleInputEmail1">
+                    <span class="err mt-3" style="color:red" asp-validation-for="PasswordConfirmation"></span>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+        <div class="col-sm-4"></div>
+    </div>
+</div>
+
+

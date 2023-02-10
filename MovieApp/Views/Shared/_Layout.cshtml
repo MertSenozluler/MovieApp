@@ -1,0 +1,90 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - MovieApp</title>
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/MovieApp.styles.css" asp-append-version="true" />
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/05e7732d1c.js" crossorigin="anonymous"></script>
+     <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Moon+Dance&display=swap" rel="stylesheet">
+    @*Animate*@
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+</head>
+<body>
+  
+     <partial name="_NavbarPartialView" />
+    
+  
+
+     @if(!User.Identity.IsAuthenticated)
+     {
+         @if (ViewContext.RouteData.Values["action"].ToString() != "Login" && ViewContext.RouteData.Values["action"].ToString() != "Registration")
+         {
+            <!-- Please Login -->
+            <div class="jumbotron comment" id="myDiv">
+            <div class="row">
+                    <div class="col-11">
+                        <p class="lead mt-2 commentPtag" style="padding-left: 30px; font-weight: 400;">Please login or register to buy movie and make comment!</p>
+                    </div>
+                <div class="col-1 btn-comment">
+                <button type="button" class="btn mt-2 btn-comment"
+                        onclick="document.getElementById('myDiv').style.display='none'">
+                        <i class="fa-solid fa-xmark commentPtag" style="color: black;"></i>
+                </button>
+                </div>
+            </div>
+            </div>
+    }
+    }
+    @RenderBody()
+
+
+    <partial name="_FooterPartialView" />
+    
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>  
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+            crossorigin="anonymous"></script>
+
+
+    @*this part is for the parts that will be shown or not shown according to the membership type to work without re-login.*@
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $.ajax({
+                type: 'get',
+                url: '/UserAuthentication/GetCurrentUserRole',
+                async: true,
+                dataType: 'json',
+                success: function (role) {
+                    if (role == "admin" || role == "superUser") 
+                    {
+                        $('.adv').css("display","none");
+                    }
+                    if (role == "superUser" || role == "premiumUser")
+                    {
+                        $('.buy').css("display","none");
+                    
+
+
+                    }
+                }
+            });
+            
+        });
+    </script>
+        
+    @await RenderSectionAsync("Scripts", required: false)
+
+
+</body>
+</html>

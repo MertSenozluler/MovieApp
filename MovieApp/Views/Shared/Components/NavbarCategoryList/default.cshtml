@@ -1,0 +1,51 @@
+﻿@using MovieApp.Models.DTO
+@model CategoryListViewModel
+
+<!-- Categories -->
+<div class="container-fluid categories">
+    <div class="container pb-5">
+        <ul class="list-inline">
+            
+
+            @for (int i = 0; i < Model.CategoryIds.Count; i++)
+            {
+                <li class="list-inline-item">
+
+                    <a class="nav-link @(Model.SelectedCategoryId == Model.CategoryIds[i] ? "selectedCategory" : "")"
+                   aria-current="page"
+                   href="/Home/MovieByCategory?categoryId=@Model.CategoryIds[i]">
+                        @Model.CategoryName[i]
+                    </a>
+
+                </li>
+            }
+
+            <li class="list-inline-item">
+                <button id="subCatButton" class="btn btn-sm btn-dark" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWidthExample" aria-expanded="false" aria-controls="collapseWidthExample">
+                    <i class="fa-solid fa-arrow-down"></i> More
+                </button>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+
+<!-- SubCategories -->
+<div class="container-fluid subCategories d-none">
+    <div class="container pb-5">
+        <ul class="list-inline">
+            @for (int i = 0; i < Model.SubCategoryIds.Count; i++)
+            {
+                <li class="list-inline-item">
+                    <a class="nav-link @(Model.SelectedSubCategoryId == Model.SubCategoryIds[i] ? "selectedCategory" : "")"
+                        aria-current="page"
+                        href="/Home/MovieBySubCategory?subcategoryId=@Model.SubCategoryIds[i]">
+                        @Model.SubCategoryName[i]
+                        </a>
+                </li>
+            }
+                       
+        </ul>
+    </div>
+</div>

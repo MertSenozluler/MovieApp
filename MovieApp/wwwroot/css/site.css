@@ -1,0 +1,195 @@
+
+
+#logo {
+    font-family: 'Moon Dance', cursive;
+    font-size: 45px;
+    font-weight: 700;
+    color: whitesmoke
+}
+
+body {
+    background-color: #d3dbd842;
+}
+
+.card {
+    background-color: #d3dbd835;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: center;
+}
+
+.selectedCategory {
+    border: 1px solid white;
+    padding: 3px;
+    border-radius: 50px;
+}
+
+.dropdown-menu {
+    background-color: brown;
+}
+
+.dropdown-menu > li > a:hover {
+        background-color: brown;
+        border: 1px solid white;
+        border-radius: 5px;
+}
+
+.login > li {
+    margin: 10px;
+}
+
+.navbar {
+    background-color: #00347cef !important;
+}
+
+.terms > ul > li {
+    background-color: #d3dbd842 !important;
+}
+
+.categories > div > ul > li > a:hover, .subCategories > div > ul > li > a:hover {
+    border: 1px solid white;
+    padding: 3px;
+    border-radius: 50px;
+}
+
+.login > li > a:hover {
+    transform: scale(1.1);
+}
+
+.page-link{
+    color:black !important;
+}
+
+
+.subCategories {
+    background-color: rgba(0, 0, 0, 0.888);
+    height: 30px;
+}
+
+.card-text {
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 13px;
+    margin-bottom: 0
+}
+
+.card-body > small {
+    font-size: 12px;
+    margin-top: 0
+}
+
+ul.list-inline {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.categories {
+    background-color: #00347cef;
+    height: 40px;
+}
+
+.comment {
+    background-color: #03C988;
+}
+
+.detailImage {
+    width: 300px;
+    height: 400px;
+    object-fit: contain;
+    object-position: top;
+}
+
+.subCategory > ul > a > li {
+    background-color: #00347cef;
+    color: white;
+    border: none;
+    text-decoration: none;
+}
+
+.fa-solid {
+    color: white;
+}
+
+ul > li > a {
+    color: white !important;
+    text-decoration: none;
+}
+
+
+.footer > div > h3, .footer > div > p, .footer > div > ul > li, .footer > div > small {
+    color: whitesmoke;
+}
+
+.list-unstyled > li > a:hover {
+    border-bottom: 1px solid white
+}
+
+
+@media (max-width: 770px) {
+    .categories {
+        height: 100%;
+    }
+
+    .subCategories {
+        height: 70px;
+    }
+
+
+    .btn-comment {
+        padding-right: 40px;
+    }
+
+    .adv {
+        height: 400px !important;
+    }
+
+    .adv2 {
+        display: none
+    }
+}
+
+@media (max-width: 650px) {
+    .list-inline {
+        flex-wrap: wrap;
+    }
+
+    .list-inline-item {
+        display: block;
+    }
+
+    .subCategoryButton {
+        padding-top: 16px;
+    }
+
+   
+    .commentPtag{
+        font-size: medium
+    }
+}
+
+
+
+
+@media (max-width: 375px) {
+
+    .subCategoryButton {
+        display: none;
+    }
+
+    .categories {
+        height: 100%;
+    }
+
+    .subCategories {
+        height: 100%;
+    }
+
+    .advSuperUser {
+        display: hidden;
+    }
+}
+
+
+

@@ -1,0 +1,36 @@
+﻿
+@{
+    ViewData["Title"] = "Add";
+}
+
+@model MovieApp.Models.Domain.SubCategory
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-sm-4"></div>
+        <div class="col-sm-4">
+            <h2>Add Subcategory</h2>
+            <form asp-action="Add" method="post">
+                <div class="mb-3">
+                    <label asp-for="SubCategoryName" class="form-label">Subcategory Name</label>
+                    <input type="text" asp-for="SubCategoryName" class="form-control">
+                </div>
+                <div class="message-box pd-x-28 error">
+                    <span asp-validation-for="SubCategoryName"></span>
+                </div>
+
+                @if (TempData["msg"] != null)
+                {
+                        <div class="mb-1 bg-danger color text-white rounded">@TempData["msg"]</div>
+                }
+
+
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <a class="btn btn-sec" href="/SubCategory/SubCategoryList">All records</a>
+            </form>
+        </div>
+        <div class="col-sm-4"></div>
+    </div>
+</div>
+
+
