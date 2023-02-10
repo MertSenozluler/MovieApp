@@ -13,19 +13,20 @@ Note: Before creating an admin, the admin profile picture named admin.jpg must b
 Note2: I will update my project when I finish the sections such as UserPage, EmailConfirmation, Purchase with credit card.
 
 FEATURES
-Users have ads on the pages right and left, they also have to see 10 seconds of ads before watching a movie. Only superUser and Admin users will not see these ads.
-Users can load a minimum balance of $10.
-PremiumUser can buy a monthly subscription for $30 and SuperUser for $50. The scheduler is defined in Repositories/TimingService.cs. For testing purposes, the expration date value was set to 2 minutes for Premium or SuperUser purchases. You can set the time you want.
-Ajax was used in terms of performance for the operations to be performed according to the roles of the User.
-$2 is required to purchase movies and $1.5 to purchase from balance.
-Admin can deactivate or reactivate users. If a deactivated user wants to log in, it says your account is not active, please contact the administrator.
-Search button works on every page.
-Users can register with Profile Picture.
-For long comments, the view more button was placed after a certain number of characters.
-Only members can comment.
-Admin can delete any comment. Other users can only delete their own comments.
-Movies are tied to categories and subcategories. These parts work dynamically in the navbar.
-Random sorting was done according to some categories on the home page.
-The movies are set as a free video from youtube.
-Required pages have been paginated.
+1) Users have ads on the pages right and left, they also have to see 10 seconds of ads before watching a movie. Only superUser and Admin users will not see these ads.
+2) Users can load a minimum balance of $10.
+3) PremiumUser can buy a monthly subscription for $30 and SuperUser for $50. The scheduler is defined in Repositories/TimingService.cs. For testing purposes, the expration date value was set to 2 minutes for Premium or SuperUser purchases. You can set the time you want.
+4) Ajax was used in terms of performance for the operations to be performed according to the roles of the User.
+5) $2 is required to purchase movies and $1.5 to purchase from balance.
+6) Admin can deactivate or reactivate users. If a deactivated user wants to log in, it says your account is not active, please contact the administrator.
+7) Search button works on every page.
+8) Users can register with Profile Picture.
+9) For long comments, the view more button was placed after a certain number of characters.
+10) Only members can comment.
+11) Admin can delete any comment. Other users can only delete their own comments.
+12) Movies are tied to categories and subcategories. These parts work dynamically in the navbar.
+13) Random sorting was done according to some categories on the home page.
+14) The movies are set as a free video from youtube.
+15) Required pages have been paginated.
+16) A simple admin page has been made
 
