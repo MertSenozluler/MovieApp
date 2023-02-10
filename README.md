@@ -6,7 +6,7 @@ For use:
 
 2) Open the admin creation section in the comment line in the UserAuthenticationController and create the admin user.
 
-3)Install category and subcategory first, then movies.
+3) Install category and subcategory first, then movies.
 
 Note: Before creating admin, admin profile picture named admin.jpg, folders named default.jpg should be created before users login. Profile photo is not mandatory for Users and a default profile photo should be assigned. When it is created with the code in the comment line with the Admin code first approach, it automatically searches for the default.jpg profile photo.
 
