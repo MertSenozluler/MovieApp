@@ -17,6 +17,8 @@ Note: I used Mailtrap for e-mail section. In appsettings.json, i added this part
     "EmailConfirmation": "confirm-email?uid={0}&token={1}",
     "ForgotPassword": "reset-password?uid={0}&token={1}"
   },
+  
+  
   "SMTPConfig": {
     "SenderAddress": "***",
     "SenderDisplayName": "Movie App",
