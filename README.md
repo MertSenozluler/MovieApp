@@ -8,9 +8,32 @@ For use:
 
 3) Post category and subcategory first, then movies.
 
-Note: Before creating an admin, the admin profile picture named admin.jpg must be uploaded. The folder named default.jpg must be loaded before users can log in. Profile photo is not mandatory for Users and a default profile photo should be assigned. When it is created with the code in the comment line with the Admin code first approach, it automatically searches for the default.jpg profile photo.
+Note: I used Mailtrap for e-mail section. In appsettings.json, i added this part:
 
-Note2: I will update my project when I finish the sections such as UserPage, EmailConfirmation, Purchase with credit card.
+"AppName": "Movie App",
+  "Application": {
+    "LoginPath": "UserAuthentication/login",
+    "AppDomain": "https://localhost:7268/",
+    "EmailConfirmation": "confirm-email?uid={0}&token={1}",
+    "ForgotPassword": "reset-password?uid={0}&token={1}"
+  },
+  "SMTPConfig": {
+    "SenderAddress": "***",
+    "SenderDisplayName": "Movie App",
+    "UserName": "***",
+    "Password": "***",
+    "Host": "sandbox.smtp.mailtrap.io",
+    "Port": 465,
+    "EnableSSL": true,
+    "UseDefaultCredentials": false,
+    "IsBodyHtml": true
+  }
+ 
+ For using e-mail part, you should arrange this part according to your e-mail service.
+  
+Note2: Before creating an admin, the admin profile picture named admin.jpg must be uploaded. The folder named default.jpg must be loaded before users can log in. Profile photo is not mandatory for Users and a default profile photo should be assigned. When it is created with the code in the comment line with the Admin code first approach, it automatically searches for the default.jpg profile photo.
+
+Note3: I will update my project when I finish the sections of Purchase with credit card.
 
 FEATURES
 1) Users have ads on the pages right and left, they also have to see 10 seconds of ads before watching a movie. Only superUser and Admin users will not see these ads.
@@ -28,5 +51,6 @@ FEATURES
 13) Random sorting was done according to some categories on the home page.
 14) The movies are set as a free video from youtube.
 15) Required pages have been paginated.
-16) A simple admin page has been made
+16) A simple admin page and user page has been made
+17) E-mail confirmation and forgot password section is active. 
 
