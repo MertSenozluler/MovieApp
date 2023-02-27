@@ -1,0 +1,92 @@
+﻿@using MovieApp.Models.DTO;
+
+@{
+    ViewData["Title"] = "UserPage";
+}
+
+@model UserPageViewModel
+
+@if (TempData["msg"] != null)
+{
+    <div class="mb-1 bg-info color text-black rounded text-center">@TempData["msg"]</div>
+}
+
+
+<div class="container-fluid">
+    <div class="row">
+
+        @*Adversitement*@
+        @if (!User.IsInRole("admin") && !User.IsInRole("superUser"))
+        {
+            <div class="col-sm-2 col-md-2 col-lg-2 mt-2 adv"><img src="~/img/adversitement1.jpeg" class="adv" style="width: 100%; height: 550px;"><img src="~/img/adversitement2.jpg" class="adv adv2" style="width: 100%; height: 550px;"> </div>
+        }
+
+
+        <div class="col-sm-8 col-md-8 col-lg-8 mt-2 mx-auto">
+            <div class="row">
+                <div class="col-sm-2 col-md-2 col-lg-2 mt-2"> </div>
+                <div class="col-sm-4 col-md-4 col-lg-4 mt-2">
+                    <div class="row">
+                        <p><img src=~/Uploads/@Model.ProfileImage class="img-fluid" style="width:150px; height:150px; border-radius:250px"></p>
+                        <form asp-controller="UserAuthentication" asp-action="ChangeProfilePicture" method="post" enctype="multipart/form-data">
+                            <label asp-for="ProfileImage" class="form-label">Change Image</label>
+                            <input type="file" name="file" asp-for="ProfileImage" class="form-control">
+                            <button type="submit" class="btn btn-primary mt-2"><i class="fa fa-camera"></i></button>
+                        </form>
+                        <p class="mt-2">Name : @Model.Name</p>
+                        <p>UserName : @Model.UserName</p>
+                        <p>Email : @Model.Email</p>
+                        @if (Model.Balance != null)
+                        {
+                            <p>Balance : @Model.Balance $</p>
+                        }
+                        else
+                        {
+                            <p>When you have a balance you can see it here!</p>
+                        }
+                        @if (Model.UserType == "user")
+                        {
+                            <p>Role : Standard</p>
+                        }
+                        else
+                        {
+                            <p>Role : @Model.UserType</p>
+                            <p>Expiration Date : @Model.ExpirationDate</p>
+                        }
+                        <p><a href="/UserAuthentication/ChangePassword">Change Password</a></p>
+                    </div>
+                </div>
+                <div class="col-sm-2 col-md-2 col-lg-2 mt-2"></div>
+                <div class="col-sm-3 col-md-3 col-lg-3 mt-2">
+                    <div class="row">
+                        @if (Model.Movies != null)
+                        {
+                        <h2>My Movies</h2>
+                        <ul class="list-group">
+                            @foreach (var item in Model.Movies)
+                            {
+                                    int index = Model.Movies.ToList().IndexOf(item);
+                                    <li class="list-item">
+                                        <div onclick="window.location.href='/Home/MovieDetail?MovieId=@Model.Movies.Keys.ElementAt(index)'" style="cursor:pointer">@item.Value </div>
+                                    </li>
+                            }
+                        </ul>
+                        }
+                        
+                    </div>
+                </div>
+                <div class="col-sm-2 col-md-2 col-lg-2 mt-2"></div>
+
+            </div>
+        </div>
+
+        @*Adversitement*@
+        @if (!User.IsInRole("admin") && !User.IsInRole("superUser"))
+        {
+            <div class="col-sm-2 col-md-2 col-lg-2 mt-2 adv"><img src="~/img/adversitement2.jpg" class="adv" style="width: 100%; height: 550px;"><img src="~/img/adversitement1.jpeg" class="adv adv2" style="width: 100%; height: 550px;"> </div>
+        }
+
+    </div>
+</div>
+
+

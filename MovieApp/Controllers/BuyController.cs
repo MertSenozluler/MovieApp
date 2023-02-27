@@ -408,11 +408,14 @@ namespace MovieApp.Controllers
                     if (latestBalance.Role == "superUser") watchList.WatchType = "Super";
 
                     else if (latestBalance.Role == "premiumUser") watchList.WatchType = "Premium";
-                }
-                else if(User.IsInRole("Admin")) watchList.WatchType = "Admin";
 
-                else  watchList.WatchType = "User";
-                
+                    else if (latestBalance.Role == "user") watchList.WatchType = "User";
+                }
+                else if(User.IsInRole("admin")) watchList.WatchType = "Admin";
+
+                else if (User.IsInRole("user")) watchList.WatchType = "User";
+
+
                 ctx.WatchList.Add(watchList);
                 ctx.SaveChanges();
                 return View();

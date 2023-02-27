@@ -1,0 +1,58 @@
+﻿@using MovieApp.Models.Domain;
+
+@{
+    ViewData["Title"] = "ConfirmEmail";
+}
+@model EmailConfirmModel
+
+<div class="container-fluid">
+    <div class="row">
+
+        @*Adversitement*@
+        @if (!User.IsInRole("admin") && !User.IsInRole("superUser"))
+        {
+            <div class="col-sm-2 col-md-2 col-lg-2 mt-2 adv"><img src="~/img/adversitement1.jpeg" class="adv" style="width: 100%; height: 550px;"><img src="~/img/adversitement2.jpg" class="adv adv2" style="width: 100%; height: 550px;"> </div>
+        }
+
+
+        <div class="col-sm-8 col-md-8 col-lg-8 mt-2 mx-auto">
+            <div class="row">
+                @if (Model.EmailVerified == true)
+                {
+                    <div class="alert alert-success" role="alert">
+                        <p>Your email has been verified successfully.</p>
+                    </div>
+                }
+                else
+                {
+                    if (Model.EmailSent)
+                    {
+                        <p>Email sent on your registered email id.</p>
+                    }
+                    else
+                    {
+                        <p>We have sent an email on your email id. Click on the link to login.</p>
+                    }
+                    <form asp-action="ConfirmEmail">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="Email" />
+
+                        <p>Did not get any email of deleted by mistake?</p>
+                        <div class="form-group">
+                            <input type="submit" value="Resend confirmation email" class="btn btn-primary" />
+                        </div>
+                    </form>
+                }
+
+            </div>         
+        </div>
+
+        @*Adversitement*@
+        @if (!User.IsInRole("admin") && !User.IsInRole("superUser"))
+        {
+            <div class="col-sm-2 col-md-2 col-lg-2 mt-2 adv"><img src="~/img/adversitement2.jpg" class="adv" style="width: 100%; height: 550px;"><img src="~/img/adversitement1.jpeg" class="adv adv2" style="width: 100%; height: 550px;"> </div>
+        }
+
+    </div>
+</div>
+

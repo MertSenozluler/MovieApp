@@ -11,10 +11,16 @@
                 </li>
             </ul>
             <ul class="navbar-nav mb-2 mb-lg-0 login">
-                @if(User.Identity.IsAuthenticated)
+                @if(User.IsInRole("admin"))
                 {
                     <li>                       
-                        <a class="btn navButton" href="#">Welcome @User.Identity.Name</a>
+                        <a class="btn navButton" href="#">Welcome Admin</a>
+                    </li>
+                }
+                else if(User.Identity.IsAuthenticated)
+                {
+                    <li>                       
+                        <a class="btn navButton" href="/UserAdminPage/UserPage">Welcome @User.Identity.Name</a>
                     </li>
                 }
                 <li>
@@ -41,6 +47,7 @@
 
                     <li class="nav-item"><a class="btn navButton" href="/UserAdminPage/AdminPage">Admin Page</a></li>
                 }
+
 
             </ul>
             <form class="d-flex" role="search">

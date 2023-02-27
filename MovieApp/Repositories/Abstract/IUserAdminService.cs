@@ -1,9 +1,12 @@
-﻿using MovieApp.Models.DTO;
+﻿using MovieApp.Models.Domain;
+using MovieApp.Models.DTO;
 
 namespace MovieApp.Repositories.Abstract
 {
     public interface IUserAdminService
     {
-        Task<AdminPageViewModel> List();
+        Task<AdminPageViewModel> AdminPage();
+
+        Task<UserPageViewModel> UserPage(ApplicationUser loggedInUser);
     }
 }

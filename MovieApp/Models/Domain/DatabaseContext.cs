@@ -22,6 +22,13 @@ namespace MovieApp.Models.Domain
         public DbSet<UserBalanceMovie> UserBalanceMovie { get; set; }
         public DbSet<AdminBalance> AdminBalance { get; set; }
         public DbSet<WatchList> WatchList { get; set; }
+        public DbSet<ChangePasswordModel> ChangePasswordModel { get; set; }
+        public DbSet<EmailConfirmModel> EmailConfirmModel { get; set; }
+        public DbSet<ForgotPasswordModel> ForgotPasswordModel { get; set; }
+        public DbSet<ResetPasswordModel> ResetPasswordModel { get; set; }
+        public DbSet<SMTPConfigModel> SMTPConfigModel { get; set;}
+        public DbSet<UserEmailOptions> UserEmailOptions { get; set; }
+
 
     }
 }

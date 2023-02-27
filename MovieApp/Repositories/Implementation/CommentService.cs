@@ -110,7 +110,7 @@ namespace MovieApp.Repositories.Implementation
             var movieList = ctx.Movie.AsQueryable();
 
             var comments = ctx.Comment.Where(c => c.MovieId == movie.Id).AsQueryable();
-
+            
 
             if (comments.Count() == 0)
             {

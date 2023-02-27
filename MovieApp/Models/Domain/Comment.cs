@@ -13,6 +13,6 @@ namespace MovieApp.Models.Domain
         public string UserName { get; set; }
         [NotMapped]
         public string UserProfilePicture { get; set; }
-     
+
     }
 }

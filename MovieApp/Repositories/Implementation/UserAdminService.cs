@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using MovieApp.Models.Domain;
 using MovieApp.Models.DTO;
 using MovieApp.Repositories.Abstract;
 using System.Globalization;
+using System.Security.Claims;
 
 namespace MovieApp.Repositories.Implementation
 {
@@ -11,14 +13,16 @@ namespace MovieApp.Repositories.Implementation
     {
         private readonly DatabaseContext ctx;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public UserAdminService(DatabaseContext ctx, UserManager<ApplicationUser> userManager)
+        public UserAdminService(DatabaseContext ctx, UserManager<ApplicationUser> userManager, IHttpContextAccessor httpContextAccessor)
         {
             this.ctx = ctx;
             this.userManager = userManager;
+            _httpContextAccessor = httpContextAccessor;
         }
 
-        public async Task<AdminPageViewModel> List()
+        public async Task<AdminPageViewModel> AdminPage()
         {
             float Totalbalance = 0;
             var balanceList = ctx.AdminBalance.ToList();
@@ -79,6 +83,90 @@ namespace MovieApp.Repositories.Implementation
                 TotalComment = CommentTotal
             };
             return list;
+        }
+
+        public async Task<UserPageViewModel> UserPage(ApplicationUser loggedInUser)
+        {
+                         
+                var loggedInUserProfilePicture = loggedInUser?.ProfilePicture;
+                var userName = loggedInUser?.UserName;
+                var userId = loggedInUser?.Id;
+                var email = loggedInUser?.Email;
+                var name = loggedInUser?.Name;
+
+                var boughtMovies = ctx.UserBalanceMovie
+                    .Where(x => x.UserName == userName)
+                    .OrderByDescending(x => x.DateTime)
+                    .Select(x => x.BuyMovie)
+                    .FirstOrDefault();
+
+                List<string> movieNames = null;
+                List<int> movieIds = null;
+                var boughtMovieIds = new List<int>();
+                var movieDict = new Dictionary<int, string>();
+                
+                if (!string.IsNullOrEmpty(boughtMovies))
+                {
+                movieIds = boughtMovies.Split(',', StringSplitOptions.RemoveEmptyEntries)
+                      .Select(int.Parse) // convert string array to int list
+                      .ToList();
+
+                movieNames = ctx.Movie
+                .Where(x => movieIds.Contains(x.Id))
+                .Select(x => x.MovieName)
+                .ToList();
+
+                var movies = ctx.Movie
+                .Where(x => movieIds.Contains(x.Id))
+                .Select(x => new { x.Id, x.MovieName })
+                .ToList();
+
+                foreach (var movie in movies)
+                {
+                    movieDict[movie.Id] = movie.MovieName; 
+                }
+
+            }
+
+
+                var role = ctx.UserBalanceMovie
+                    .Where(x => x.UserName == userName)
+                    .OrderByDescending(x => x.DateTime)
+                    .Select(x => x.Role)
+                    .FirstOrDefault();
+
+                var expirationDate = ctx.UserBalanceMovie
+                    .Where(x => x.UserName == userName)
+                    .OrderByDescending(x => x.DateTime)
+                    .Select(x => x.ExprationDate)
+                    .FirstOrDefault();
+
+                var balance = ctx.UserBalanceMovie
+                    .Where(x => x.UserName == userName)
+                    .OrderByDescending(x => x.DateTime)
+                    .Select(x => x.Balance)
+                    .FirstOrDefault();
+
+
+
+            var userPage = new UserPageViewModel
+                {
+                    ProfileImage = loggedInUserProfilePicture,
+                    Balance = balance,
+                    UserType = role,
+                    Movies = movieDict,
+                    UserName = userName,
+                    Name = name,
+                    Email = email,
+                    ExpirationDate = expirationDate.HasValue ? expirationDate.Value.ToString() : "No expiration date!",
+
+            };
+                return userPage;
+          
+            
+
+            
+
         }
     }
 }
