@@ -20,10 +20,10 @@ Note: I used Mailtrap for e-mail section. In appsettings.json, i added this part
   
   
   "SMTPConfig": {
-    "SenderAddress": "***",
+    "SenderAddress": ".....",
     "SenderDisplayName": "Movie App",
-    "UserName": "***",
-    "Password": "***",
+    "UserName": "......",
+    "Password": "........",
     "Host": "sandbox.smtp.mailtrap.io",
     "Port": 465,
     "EnableSSL": true,
@@ -33,7 +33,7 @@ Note: I used Mailtrap for e-mail section. In appsettings.json, i added this part
  
  For using e-mail part, you should arrange this part according to your e-mail service.
   
-Note2: Before creating an admin, the admin profile picture named admin.jpg must be uploaded. The folder named default.jpg must be loaded before users can log in. Profile photo is not mandatory for Users and a default profile photo should be assigned. When it is created with the code in the comment line with the Admin code first approach, it automatically searches for the default.jpg profile photo.
+Note2: for using profil photo in Admin, the admin profile picture named admin.jpg should be uploaded. The folder named default.jpg should be loaded before users can log in. Profile photo is not mandatory for Users and a default profile photo should be assigned. When it is created with the code in the comment line with the Admin code first approach, it automatically searches for the default.jpg profile photo.
 
 Note3: I will update my project when I finish the sections of Purchase with credit card.
 
